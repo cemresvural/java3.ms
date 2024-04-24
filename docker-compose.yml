@@ -1,0 +1,23 @@
+services:
+  productservice:
+    build: ./productservice
+    ports:
+      - "8086:8086"
+  postgres:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=1711
+
+  discovery-server:
+    build: ./discoveryserver
+    ports:
+      - "8888:8888"
+
+  gateway-server:
+    build: ./gatewayserver
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-server

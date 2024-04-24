@@ -9,6 +9,8 @@ services:
       - "5433:5432"
     environment:
       - POSTGRES_PASSWORD=1711
+    volumes:
+      - postgresql-volume:/var/lib/postgresql/data
 
   discovery-server:
     build: ./discoveryserver
@@ -21,3 +23,16 @@ services:
       - "8080:8080"
     depends_on:
       - discovery-server
+    environment:
+     - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+
+
+
+
+
+
+
+
+volumes:
+  postgresql-volume:
+    name: postresql-volume2

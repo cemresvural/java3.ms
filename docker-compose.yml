@@ -29,10 +29,6 @@ services:
 
 
 
-
-
-
-
 volumes:
   postgresql-volume:
     name: postresql-volume2

@@ -1,6 +1,15 @@
 spring:
   application:
     name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/oguzhansecgel/turkcell-ms-config-pair6
+
+
+server:
+  port: 8079
 
 
 

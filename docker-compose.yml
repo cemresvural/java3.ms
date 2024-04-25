@@ -12,6 +12,11 @@ services:
     volumes:
       - postgresql-volume:/var/lib/postgresql/data
 
+  config-server:
+    build: ./configserver
+    ports:
+      - "8079:8079"
+
   discovery-server:
     build: ./discoveryserver
     ports:
@@ -23,8 +28,10 @@ services:
       - "8080:8080"
     depends_on:
       - discovery-server
+      - config-server
     environment:
-     - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+     - SPRING_CLOUD_CONFIG_PROFILE=prod
+     - SPRING_CONFIG_IMPORT=configserver:http://config-server:8079
 
 
 

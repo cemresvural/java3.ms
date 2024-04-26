@@ -16,26 +16,35 @@ services:
     build: ./configserver
     ports:
       - "8079:8079"
-
+    networks:
+      - common
   discovery-server:
     build: ./discoveryserver
     ports:
       - "8888:8888"
-
+    networks:
+      - common
   gateway-server:
     build: ./gatewayserver
     ports:
       - "8080:8080"
+    restart: on-failure
     depends_on:
       - discovery-server
       - config-server
     environment:
      - SPRING_CLOUD_CONFIG_PROFILE=prod
-     - SPRING_CONFIG_IMPORT=configserver:http://config-server:8079
-
+     - CONFIGURL=http://config-server:8079
+    networks:
+      - common
 
 
 
 volumes:
   postgresql-volume:
     name: postresql-volume2
+
+
+networks:
+  common:
+    driver: bridge

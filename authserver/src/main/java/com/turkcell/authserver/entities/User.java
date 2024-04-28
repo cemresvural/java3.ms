@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private String lastName;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //TODO: ROLLER
+
         return null;
     }
 

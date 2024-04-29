@@ -25,7 +25,7 @@ public class UserManager implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //spring security
+
         return userRepository.findByEmail(username).orElseThrow(() -> new BadCredentialsException(""));
     }
 }

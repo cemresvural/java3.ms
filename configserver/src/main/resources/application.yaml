@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/oguzhansecgel/turkcell-ms-config-pair6
+          uri: https://github.com/cemresvural/ms-config
 
 
 server:

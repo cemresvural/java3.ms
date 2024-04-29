@@ -1,6 +1,7 @@
 package com.turkcell.authserver.services.dtos.requests;
 
 
+import com.turkcell.authserver.services.concretes.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,5 @@ public class RegisterRequest {
     private String password;
     private String firstName;
     private String lastName;
+    private Role role;
 }

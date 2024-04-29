@@ -53,6 +53,7 @@ public class JwtService {
                 .getPayload();
     }
 
+    
     private Key getSigningKey()
     {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);

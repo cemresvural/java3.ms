@@ -6,10 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -40,11 +43,19 @@ public class User implements UserDetails {
     @Column(name="last_name")
     private String lastName;
 
-    @Column(name="roles")
-    @Enumerated(EnumType.STRING)
-    @JoinTable(name="roles", joinColumns = @JoinColumn(name="role_id"))
-    private List<Role> authorities;
 
+    @ManyToMany
+    @JoinTable(
+            name="user_roles",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id")
+    )
+    private Set<Role> roles;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
 
     @Override
     public String getUsername() {

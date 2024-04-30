@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import static io.jsonwebtoken.Claims.EXPIRATION;
@@ -22,18 +23,19 @@ public class JwtService {
     private long EXPIRATION;
     @Value("${jwt.secret}")
     private String SECRET_KEY;
-    public String generateToken(String username, Map<String, Object> extraClaims){
+    public String generateToken(String username, Map<String, Object> extraClaims)
+    {
         String token = Jwts
                 .builder()
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+ EXPIRATION))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .claims(extraClaims)
                 .signWith(getSigningKey())
                 .compact();
-
         return token;
     }
+
     public Boolean validateToken(String token)
     {
         return getTokenClaims(token).getExpiration().after(new Date()); // Kendi ürettiğim token mı?
@@ -41,6 +43,11 @@ public class JwtService {
     public String extractUsername(String token)
     {
         return getTokenClaims(token).getSubject();
+    }
+
+    public List<String> extractRoles(String token)
+    {
+        return getTokenClaims(token).get("roles", List.class);
     }
 
     private Claims getTokenClaims(String token)
@@ -53,7 +60,6 @@ public class JwtService {
                 .getPayload();
     }
 
-    
     private Key getSigningKey()
     {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);

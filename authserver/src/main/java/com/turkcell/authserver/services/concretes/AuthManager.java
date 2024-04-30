@@ -11,12 +11,16 @@ import com.turkcell.authserver.services.dtos.requests.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -43,20 +47,25 @@ public class AuthManager implements AuthService {
 
     @Override
     public String login(LoginRequest loginRequest) {
+         //TODO: Handle Exception.
+            //TODO: E-posta da şifre de yanlış olursa olsun, mesaj ve yanıt kalıbı birebir aynı olmalı.
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+            if (!authentication.isAuthenticated())
+                throw new RuntimeException("E-posta ya da şifre yanlış");
+
+            UserDetails user = userService.loadUserByUsername(loginRequest.getEmail());
 
 
-        // TODO: Handle Exception.
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
-        if(!authentication.isAuthenticated())
-            throw new RuntimeException("E-posta ya da şifre yanlış");
-
-        // TODO: Add extra claims.
-        Map<String,Object> claims = new HashMap<>();
-        claims.put("UserId", 1);
-        claims.put("Deneme", "Turkcell");
-        return jwtService.generateToken(loginRequest.getEmail(), claims);
-    }
+            List<String> roles = user
+                    .getAuthorities()
+                    .stream()
+                    .map((role) -> role.getAuthority())
+                    .toList();
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("roles", roles);
+            return jwtService.generateToken(loginRequest.getEmail(), claims);
+        }
 
 }

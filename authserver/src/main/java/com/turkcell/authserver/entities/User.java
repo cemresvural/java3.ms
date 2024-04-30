@@ -1,6 +1,5 @@
 package com.turkcell.authserver.entities;
 
-import com.turkcell.authserver.services.concretes.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

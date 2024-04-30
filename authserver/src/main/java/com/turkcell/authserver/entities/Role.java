@@ -1,4 +1,4 @@
-package com.turkcell.authserver.services.concretes;
+package com.turkcell.authserver.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,7 +1,7 @@
 package com.turkcell.authserver.services.dtos.requests;
 
 
-import com.turkcell.authserver.services.concretes.Role;
+import com.turkcell.authserver.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

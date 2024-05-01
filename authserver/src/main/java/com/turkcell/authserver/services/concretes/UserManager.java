@@ -2,11 +2,13 @@ package com.turkcell.authserver.services.concretes;
 
 
 
+import com.turkcell.authserver.core.utilities.exceptions.types.BusinessException;
 import com.turkcell.authserver.entities.User;
 import com.turkcell.authserver.repositories.UserRepository;
 import com.turkcell.authserver.services.abstracts.UserService;
+import com.turkcell.authserver.services.messages.AuthMessages;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,6 @@ public class UserManager implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return userRepository.findByEmail(username).orElseThrow(() -> new BadCredentialsException(""));
+        return userRepository.findByEmail(username).orElseThrow(() -> new BusinessException(AuthMessages.LOGIN_FAILED));
     }
 }

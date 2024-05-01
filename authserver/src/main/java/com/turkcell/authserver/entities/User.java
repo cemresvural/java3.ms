@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.util.Collection;
-import java.util.List;
+
 import java.util.Set;
 
 
@@ -44,7 +44,7 @@ public class User implements UserDetails {
     private String lastName;
 
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
             name="user_roles",
             joinColumns = @JoinColumn(name="user_id"),

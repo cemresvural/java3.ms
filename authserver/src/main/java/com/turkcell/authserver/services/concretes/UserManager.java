@@ -2,7 +2,7 @@ package com.turkcell.authserver.services.concretes;
 
 
 
-import com.turkcell.authserver.core.utilities.exceptions.types.BusinessException;
+
 import com.turkcell.authserver.entities.User;
 import com.turkcell.authserver.repositories.UserRepository;
 import com.turkcell.authserver.services.abstracts.UserService;
@@ -30,7 +30,7 @@ public class UserManager implements UserService {
 
         User user= userRepository
                 .findByEmail(username)
-                .orElseThrow(() -> new BusinessException(AuthMessages.LOGIN_FAILED));
+                .orElseThrow(() -> new RuntimeException(AuthMessages.LOGIN_FAILED));
         return user;
     }
 }

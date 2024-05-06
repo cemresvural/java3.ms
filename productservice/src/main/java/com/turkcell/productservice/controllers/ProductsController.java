@@ -1,6 +1,7 @@
 package com.turkcell.productservice.controllers;
 
 
+import com.turkcell.core3.TestService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,5 +18,11 @@ public class ProductsController {
     @GetMapping("{id}")
     public int test(@PathVariable int id){
         return id;
+    }
+
+
+    @GetMapping("test")
+    public String get(){
+        return TestService.hello();
     }
 }

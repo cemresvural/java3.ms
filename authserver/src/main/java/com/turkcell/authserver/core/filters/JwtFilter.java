@@ -1,7 +1,6 @@
 package com.turkcell.authserver.core.filters;
 
-import com.turkcell.authserver.core.services.JwtService;
-import com.turkcell.authserver.services.abstracts.UserService;
+import com.turkcell.core3.security.BaseJwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtService jwtService;
+    private final BaseJwtService jwtService;
 
 
 

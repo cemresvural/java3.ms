@@ -1,20 +1,18 @@
 package com.turkcell.authserver.services.concretes;
 
 
-import com.turkcell.authserver.core.services.JwtService;
 import com.turkcell.authserver.entities.User;
 import com.turkcell.authserver.services.abstracts.AuthService;
 
 import com.turkcell.authserver.services.abstracts.UserService;
 import com.turkcell.authserver.services.dtos.requests.LoginRequest;
 import com.turkcell.authserver.services.dtos.requests.RegisterRequest;
+import com.turkcell.core3.security.BaseJwtService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,7 +29,7 @@ public class AuthManager implements AuthService {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
-    private final JwtService jwtService;
+    private final BaseJwtService jwtService;
 
     @Override
     public void register(RegisterRequest request) {

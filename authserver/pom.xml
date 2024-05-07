@@ -86,6 +86,12 @@
 			<version>0.12.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.turkcell</groupId>
+			<artifactId>core3</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>

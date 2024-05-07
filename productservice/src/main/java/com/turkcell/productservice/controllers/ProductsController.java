@@ -21,8 +21,5 @@ public class ProductsController {
     }
 
 
-    @GetMapping("test")
-    public String get(){
-        return TestService.hello();
-    }
+
 }

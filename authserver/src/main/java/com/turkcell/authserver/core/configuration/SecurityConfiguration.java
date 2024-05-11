@@ -1,8 +1,10 @@
 package com.turkcell.authserver.core.configuration;
 
 
-import com.turkcell.authserver.core.filters.JwtFilter;
 
+
+import com.turkcell.core3.security.BaseJwtFilter;
+import com.turkcell.core3.security.BaseSecurityService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -25,8 +27,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final UserDetailsService userService;
-    private final JwtFilter jwtFilter;
 
+    private final PasswordEncoder passwordEncoder;
+    private final BaseSecurityService baseSecurityService;
     private static final String[] WHITE_LIST = {
             "/api/v1/auth/**",
             "/swagger-ui/**",
@@ -35,13 +38,12 @@ public class SecurityConfiguration {
             "/v3/api-docs/**",
     };
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        baseSecurityService.configureCommonSecurityRules(http);
         http
                 .authorizeHttpRequests((req)->
                         req
@@ -51,16 +53,14 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.PUT, "/api/v1/test/**").hasAnyAuthority("Test.Update")
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/test/**").hasAnyAuthority("Test.Delete")
                                 .anyRequest().authenticated()
-                )
-                .csrf(AbstractHttpConfigurer::disable)  // Cross-Site Request Forgery
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                );
+
         return http.build();
     }
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userService);
         return daoAuthenticationProvider;
     }

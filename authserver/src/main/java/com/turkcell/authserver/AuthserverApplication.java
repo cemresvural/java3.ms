@@ -1,9 +1,12 @@
 package com.turkcell.authserver;
 
+import com.turkcell.core3.annotations.EnableSecurity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@EnableSecurity
 public class AuthserverApplication {
 
 	public static void main(String[] args) {

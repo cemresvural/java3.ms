@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>com.turkcell</groupId>
 			<artifactId>core3</artifactId>
-			<version>1.1-SNAPSHOT</version>
+			<version>2.0.2</version>
 		</dependency>
 	</dependencies>
 

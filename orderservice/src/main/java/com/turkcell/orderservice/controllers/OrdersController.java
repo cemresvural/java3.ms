@@ -22,7 +22,7 @@ public class OrdersController {
       private final KafkaTemplate<String,Object> kafkaTemplate;
 
     @PostMapping
-    public String addOrder(@RequestParam int productId){
+    public String addOrder(@RequestParam int productId) {
 
         //should go to the product service and get stock information of the products
 
@@ -35,8 +35,8 @@ public class OrdersController {
                 .block();
 
 */
-        kafkaTemplate.sendDefault("NewOrder",new OrderCreatedEvent(1, LocalDateTime.now().minusDays(3)));
-        int stockResult=productServiceClient.getStockByProductId(productId);
+     /*   kafkaTemplate.sendDefault("NewOrder",new OrderCreatedEvent(1, LocalDateTime.now().minusDays(3)));
+        int stockResult=productServiceClient.getStockByProductId(productId);*/
         return "Order added.";
     }
 }

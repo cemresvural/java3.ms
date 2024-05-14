@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class OrdersController {
 
-   // private final WebClient.Builder webClientBuilder;
+
       private final ProductServiceClient productServiceClient;
       private final KafkaTemplate<String,Object> kafkaTemplate;
 
@@ -35,8 +35,17 @@ public class OrdersController {
                 .block();
 
 */
-     /*   kafkaTemplate.sendDefault("NewOrder",new OrderCreatedEvent(1, LocalDateTime.now().minusDays(3)));
-        int stockResult=productServiceClient.getStockByProductId(productId);*/
+
+        int stockResult=productServiceClient.getStockByProductId(productId);
+        System.out.println("Reply from product service: " + stockResult);
+
+
+        if(stockResult <=0)
+            throw new RuntimeException("The product not in stock.");
+
+
+
+        kafkaTemplate.sendDefault("NewOrder",new OrderCreatedEvent(1, LocalDateTime.now().minusDays(3)));
         return "Order added.";
     }
 }

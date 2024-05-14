@@ -1,8 +1,8 @@
 package com.turkcell.orderservice.controllers;
 
 
+import com.turkcell.common.events.OrderCreatedEvent;
 import com.turkcell.orderservice.clients.ProductServiceClient;
-import com.turkcell.orderservice.core.configuration.events.OrderCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;

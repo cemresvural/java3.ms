@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>com.turkcell</groupId>
 			<artifactId>core3</artifactId>
-			<version>2.0.2</version>
+			<version>2.0.3</version>
 		</dependency>
         <dependency>
             <groupId>com.turkcell</groupId>
@@ -85,6 +85,13 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>Github Package Center</name>
+			<url>https://maven.pkg.github.com/cemresvural/java3.ms</url>
+		</repository>
+	</repositories>
 
 	<dependencyManagement>
 		<dependencies>
